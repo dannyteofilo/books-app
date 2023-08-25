@@ -3,7 +3,7 @@ import useAxios from "../../hooks/useAxios";
 import Card from "../../components/Card";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
-import logo from '../../assets/images/logo.svg'
+import logo from "../../assets/images/logo.svg";
 import "./styles.css";
 
 const BooksList = () => {
@@ -19,9 +19,7 @@ const BooksList = () => {
   );
 
   useEffect(() => {
-    console.log("BooksList mounted");
     if (data) {
-      console.log("Fetched books:", data);
       setBooks(data.items);
     }
     if (error) {
@@ -38,8 +36,6 @@ const BooksList = () => {
     setSearchQuery(searchInput);
   };
 
-  console.log("is logging: ", isLoggedIn);
-
   if (!isLoggedIn) {
     return <Navigate to="/login" />;
   }
@@ -48,9 +44,11 @@ const BooksList = () => {
     <div className="container-list">
       <nav>
         <div>
-        <img className="logo" src={logo} alt="books" />
+          <img className="logo" src={logo} alt="books" />
         </div>
-        <button className="btn-logout" onClick={logout}>Logout</button>
+        <button className="btn-logout" onClick={logout}>
+          Logout
+        </button>
       </nav>
       <h1>BooksList page</h1>
       <form onSubmit={handleSearchSubmit}>
