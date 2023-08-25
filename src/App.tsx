@@ -8,7 +8,7 @@ import { AuthProvider } from "./context/authContext.js";
 
 const AppRouter = () => {
   return (
-    <div>
+    <div className="books">
       <AuthProvider>
         <BrowserRouter>
           <Routes>

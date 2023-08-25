@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import useAxios from "../../hooks/useAxios";
 import Card from "../../components/Card";
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
+import logo from '../../assets/images/logo.svg'
+import "./styles.css";
 
 const BooksList = () => {
   const { logout, isLoggedIn } = useAuth();
   const [books, setBooks] = useState<any[]>([]);
-  const [searchQuery, setSearchQuery] = useState<string>("dragones");
+  const [searchQuery, setSearchQuery] = useState<string>("react");
   const [searchInput, setSearchInput] = useState<string>("");
 
   const { data, error, loading } = useAxios<any>(
@@ -39,44 +41,40 @@ const BooksList = () => {
   console.log("is logging: ", isLoggedIn);
 
   if (!isLoggedIn) {
-    // Si el usuario no está autenticado, redirigir al inicio de sesión
     return <Navigate to="/login" />;
   }
 
   return (
-    <div>
+    <div className="container-list">
       <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <>
-            <li>
-              <Link to="/books">Books</Link>
-            </li>
-            <li>
-              <button onClick={logout}>Logout</button>
-            </li>
-          </>
-        </ul>
+        <div>
+        <img className="logo" src={logo} alt="books" />
+        </div>
+        <button className="btn-logout" onClick={logout}>Logout</button>
       </nav>
       <h1>BooksList page</h1>
       <form onSubmit={handleSearchSubmit}>
-        <div>
+        <div className="search">
           <label htmlFor="search">Search: </label>
           <input
+            className="input-form"
             type="text"
             id="search"
             value={searchInput}
             onChange={handleSearchChange}
           />
-          <button type="submit">Search</button>
+          <button className="btn-search" type="submit">
+            Search
+          </button>
         </div>
       </form>
       {loading ? <p>Loading...</p> : null}
-      {books?.map((book: any) => (
-        <Card key={book.id} {...book}></Card>
-      ))}
+      <div className="list">
+        {books?.map((book: any) => (
+          <Card key={book.id} {...book}></Card>
+        ))}
+      </div>
+      <div className="circle"></div>
     </div>
   );
 };
